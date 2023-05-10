@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Card, FormField, Loader } from '../components';
+import Noimg from "../assets/New folder/No.png"
 
 const RenderCards = ({ data, title }) => {
   if (data?.length > 0) {
@@ -10,7 +11,10 @@ const RenderCards = ({ data, title }) => {
   }
 
   return (
-    <h2 className="mt-5 font-bold text-[#6469ff] text-xl uppercase">{title}</h2>
+    <div className='flex flex-col'>
+    <h2 className="mt-5 font-bold text-[#ff004c] text-xl uppercase">{title}</h2>
+    <img src={Noimg} width={50} alt="" />
+    </div>
   );
 };
 
@@ -99,7 +103,7 @@ const Home = () => {
               ) : (
                 <RenderCards
                   data={allPosts}
-                  title="No Posts Yet"
+                  title="Angel unaku Aarivu iruka server check panu po "
                 />
               )}
             </div>
