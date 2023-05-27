@@ -11,8 +11,12 @@ const App = () => (
       <Link to="/">
         <h1 className='font-bold text-[#ff004c]'> IMAGE GENERATION</h1>
       </Link>
-
-      <h1 to="" className="font-inter font-medium bg-[#ff004c] text-white px-4 py-2 rounded-md"><a href="https://deepai.org/machine-learning-model/text2img">Create</a> </h1>
+      <div className='flex gap-4'>
+        <Link to="/createpost" className="font-inter font-medium bg-[#6469ff] text-white px-4 py-2 rounded-md">Create Post </Link>
+        <h1 to="" className="font-inter font-medium bg-[#6469ff] text-white px-4 py-2 rounded-md"><a href="https://deepai.org/machine-learning-model/text2img">Sample</a> </h1>
+      </div>
+      
+      
     </header>
     <main className="sm:p-8 px-4 py-8 w-full bg-[#f9fafe] min-h-[calc(100vh-73px)]">
       <Routes>

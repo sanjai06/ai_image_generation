@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { preview } from '../assets';
 import { getRandomPrompt } from '../utils';
 import { FormField, Loader } from '../components';
-import deepai from 'deepai';
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -28,11 +28,18 @@ const CreatePost = () => {
     if (form.prompt) {
       try {
         setGeneratingImg(true);
-        const response = await deepai.callStandardApi('text2img', {
-          text: form.prompt,
+        const response = await fetch('https://api.openai.com/v1/images/generations', {
+          method: 'POST',
+          headers: {
+            'Content-Type':'application/json',
+          },
+          body: JSON.stringify({
+            prompt: form.prompt,
+          }),
         });
 
-        setForm({ ...form, photo: response.output_url });
+        const data = await response.json();
+        setForm({ ...form, photo: `data:image/jpeg;base64,${data.photo}` })
       } catch (err) {
         alert(err);
       } finally {
@@ -49,7 +56,7 @@ const CreatePost = () => {
     if (form.prompt && form.photo) {
       setLoading(true);
       try {
-        const response = await fetch('YOUR_API_ENDPOINT', {
+        const response = await fetch('https://api.openai.com/v1/images/generations', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -66,7 +73,7 @@ const CreatePost = () => {
         setLoading(false);
       }
     } else {
-      alert('Please generate an image with proper details');
+        alert('Please generate an image with proper details');
     }
   };
 
@@ -136,8 +143,7 @@ const CreatePost = () => {
           <p className="mt-2 text-[#666e75] text-[14px]">** Once you have created the image you want, you can share it with others in the community **</p>
           <button
             type="submit"
-            className="mt-3 text-white bg-[#6469ff] font-medium rounded-md text-sm w-full sm:w-auto px-5 py-2.5 text-center"
-          >
+            className="mt-3 text-white bg-[#6469ff] font-medium rounded-md text-sm w-full sm:w-auto px-5 py-2.5 text-center" >
             {loading ? 'Sharing...' : 'Share with the Community'}
           </button>
         </div>
@@ -145,5 +151,6 @@ const CreatePost = () => {
     </section>
   );
 };
+
 
 export default CreatePost;
